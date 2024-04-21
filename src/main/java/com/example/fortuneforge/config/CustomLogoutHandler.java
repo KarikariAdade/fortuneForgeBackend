@@ -29,8 +29,11 @@ public class CustomLogoutHandler implements LogoutHandler {
         Token storedToken = tokenRepository.findByToken(token).orElse(null);
 
         if (storedToken != null) {
+            System.out.println("Token stored: " + storedToken);
             storedToken.setLoggedOut(true);
             tokenRepository.save(storedToken);
+        }else {
+            System.out.println("token not found: " + token);
         }
     }
 }

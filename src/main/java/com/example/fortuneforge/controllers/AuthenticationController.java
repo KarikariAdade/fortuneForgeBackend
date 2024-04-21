@@ -1,8 +1,8 @@
 package com.example.fortuneforge.controllers;
 
-import com.example.fortuneforge.models.User;
+import com.example.fortuneforge.requests.authentication.LoginRequest;
 import com.example.fortuneforge.requests.authentication.RegistrationRequest;
-import com.example.fortuneforge.response.ApiResponse;
+import com.example.fortuneforge.config.ApiResponse;
 import com.example.fortuneforge.services.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse> login(@RequestBody User request) {
+    public ResponseEntity<ApiResponse> login(@RequestBody @Valid LoginRequest request) {
 
         System.out.println(request.toString());
 
