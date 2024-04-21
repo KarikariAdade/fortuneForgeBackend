@@ -2,6 +2,8 @@ package com.example.fortuneforge.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -23,6 +25,7 @@ public class User {
 
     private String password;
 
+    @Column(unique = true)
     private String email;
 
     private String phone;
@@ -30,13 +33,15 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
-    @CreatedDate
-    @Column(nullable = false, updatable = false)
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
 
-    @LastModifiedDate
-    @Column(insertable = false)
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     public User() {

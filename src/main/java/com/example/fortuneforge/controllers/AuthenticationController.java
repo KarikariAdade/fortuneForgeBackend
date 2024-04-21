@@ -1,8 +1,10 @@
 package com.example.fortuneforge.controllers;
 
 import com.example.fortuneforge.models.User;
+import com.example.fortuneforge.requests.authentication.RegistrationRequest;
 import com.example.fortuneforge.response.ApiResponse;
 import com.example.fortuneforge.services.AuthenticationService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +20,7 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse> register(@RequestBody User request) {
+    public ResponseEntity<ApiResponse> register(@RequestBody @Valid RegistrationRequest request) {
 
         System.out.println(request.toString());
 
