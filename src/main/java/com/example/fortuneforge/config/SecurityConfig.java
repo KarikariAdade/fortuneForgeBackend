@@ -45,6 +45,7 @@ public class SecurityConfig {
                                 .permitAll()
                                 .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
                                 .anyRequest()
+
                                 .authenticated()
                 ).userDetailsService(userDetailService)
                 .exceptionHandling(e -> e.accessDeniedHandler(accessDeniedHandler)
