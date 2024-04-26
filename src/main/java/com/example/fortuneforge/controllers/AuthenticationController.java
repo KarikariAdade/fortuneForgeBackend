@@ -4,6 +4,7 @@ import com.example.fortuneforge.config.ApiResponse;
 import com.example.fortuneforge.models.User;
 import com.example.fortuneforge.repositories.UserRepository;
 import com.example.fortuneforge.requests.authentication.LoginRequest;
+import com.example.fortuneforge.requests.authentication.PasswordResetRequest;
 import com.example.fortuneforge.requests.authentication.RegistrationRequest;
 import com.example.fortuneforge.services.AuthEmailService;
 import com.example.fortuneforge.services.AuthenticationService;
@@ -62,5 +63,10 @@ public class AuthenticationController {
 
         return authenticationService.forgotPassword(user);
 
+    }
+
+    @PostMapping("/password/reset")
+    public ResponseEntity<ApiResponse> passwordReset(@RequestBody @Valid PasswordResetRequest request) {
+        return authenticationService.passwordReset(request);
     }
 }

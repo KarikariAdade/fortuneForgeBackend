@@ -8,6 +8,7 @@ import com.example.fortuneforge.repositories.PasswordResetRepository;
 import com.example.fortuneforge.repositories.TokenRepository;
 import com.example.fortuneforge.repositories.UserRepository;
 import com.example.fortuneforge.requests.authentication.LoginRequest;
+import com.example.fortuneforge.requests.authentication.PasswordResetRequest;
 import com.example.fortuneforge.requests.authentication.RegistrationRequest;
 import com.example.fortuneforge.config.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +19,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.context.Context;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -52,32 +52,10 @@ public class AuthenticationService {
 
         } catch (Exception exception) {
 
-            String errorMessage = "Failed to register user: " + exception.getMessage();
-
-            ApiResponse errorResponse = new ApiResponse(errorMessage, null, null);
-
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+            return catchErrors("Failed to register user: ", exception);
 
         }
 
-    }
-
-    private User setUserDetails(RegistrationRequest registrationRequest) {
-
-        User user = new User();
-
-        assert registrationRequest != null;
-        user.setName(registrationRequest.getName());
-
-        user.setEmail(registrationRequest.getEmail());
-
-        user.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
-
-        user.setPhone(registrationRequest.getPhone());
-
-        user.setRole(Role.valueOf(registrationRequest.getRole()));
-
-        return user;
     }
 
     public ResponseEntity<ApiResponse> loginUser(LoginRequest request) {
@@ -98,15 +76,12 @@ public class AuthenticationService {
 
         } catch (Exception exception) {
 
-            String errorMessage = "Failed to login user: " + exception.getMessage();
-
-            ApiResponse errorResponse = new ApiResponse(errorMessage, null, null);
-
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+            return catchErrors("Failed to login user: ", exception);
         }
 
     }
 
+    @Transactional
     public ResponseEntity<ApiResponse> forgotPassword (User user) {
 
         try {
@@ -115,6 +90,10 @@ public class AuthenticationService {
                 Optional<User> selectedUser = userRepository.findByEmail(user.getEmail());
 
                 if (selectedUser.isPresent()) {
+
+                    User userWithPasswordResets = selectedUser.get();
+
+                    deletePasswordResets(userWithPasswordResets);
 
                     PasswordResets passwordResets = new PasswordResets();
 
@@ -129,13 +108,11 @@ public class AuthenticationService {
 
                     context.setVariable("name", selectedUser.get().getName());
 
-                    context.setVariable("url", "localhost:4200/password/reset/" + passwordResets.getToken());
-
-                    String htmlContent = "<html><body><h1>Hello!</h1><p>This is an HTML email.</p></body></html>";
+                    context.setVariable("url", "http://localhost:4200/auth/password/reset/" + passwordResets.getToken());
 
                     emailService.sendEmail(user.getEmail(), "Password Reset Email", "password-reset", context);
 
-                    return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Email sent successfully", user.getEmail(), null));
+                    return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Email sent successfully. Kindly view the email to continue the password reset process", user.getEmail(), null));
                 }
 
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse("Failed to send email. User not found", null, null));
@@ -146,18 +123,54 @@ public class AuthenticationService {
 
         } catch (Exception exception) {
 
-            String errorMessage = "Failed to send password reset email: " + exception.getMessage();
-
-            ApiResponse errorResponse = new ApiResponse(errorMessage, null, null);
-
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+            return catchErrors("Failed to send password reset email: ", exception);
         }
 
 
     }
 
-    public ResponseEntity<ApiResponse> passwordReset(String token) {
-        return null;
+    private static ResponseEntity<ApiResponse> catchErrors(String x, Exception exception) {
+        String errorMessage = x + exception.getMessage();
+
+        ApiResponse errorResponse = new ApiResponse(errorMessage, null, null);
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
+
+    public ResponseEntity<ApiResponse> passwordReset(PasswordResetRequest request) {
+
+        try {
+
+            PasswordResets passwordResets = passwordResetRepository.findPasswordResetsByToken(request.getToken())
+                    .orElseThrow(() -> new RuntimeException("Password reset token does not exist. Kindly generate a new one."));
+
+            if (passwordResets.getExpiryDate().isAfter(LocalDateTime.now()) && !passwordResets.isUsed()) {
+
+                resetUserPassword(request, passwordResets);
+
+                return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Password Reset Successful", null, null));
+
+            }else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse("Password reset token expired. Kindly generate a new one.", null, null));
+            }
+
+        } catch (Exception exception) {
+
+            return catchErrors("Failed to send password reset email: ", exception);
+        }
+
+    }
+
+    private void resetUserPassword(PasswordResetRequest request, PasswordResets passwordResets) {
+        passwordResets.setUsed(true);
+
+        passwordResetRepository.save(passwordResets);
+
+        User user = passwordResets.getUser();
+
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+
+        userRepository.save(user);
     }
 
     private void saveUserToken(String jwt, User user) {
@@ -189,5 +202,28 @@ public class AuthenticationService {
         UUID uuid = UUID.randomUUID();
 
         return uuid.toString();
+    }
+
+    @Transactional
+    public void deletePasswordResets(User user) {
+        passwordResetRepository.deleteAllByUser(user);
+    }
+
+    private User setUserDetails(RegistrationRequest registrationRequest) {
+
+        User user = new User();
+
+        assert registrationRequest != null;
+        user.setName(registrationRequest.getName());
+
+        user.setEmail(registrationRequest.getEmail());
+
+        user.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
+
+        user.setPhone(registrationRequest.getPhone());
+
+        user.setRole(Role.valueOf(registrationRequest.getRole()));
+
+        return user;
     }
 }
