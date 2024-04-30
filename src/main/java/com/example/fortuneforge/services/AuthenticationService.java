@@ -1,5 +1,6 @@
 package com.example.fortuneforge.services;
 
+import com.example.fortuneforge.config.CatchErrorResponses;
 import com.example.fortuneforge.models.PasswordResets;
 import com.example.fortuneforge.models.Role;
 import com.example.fortuneforge.models.Token;
@@ -52,7 +53,7 @@ public class AuthenticationService {
 
         } catch (Exception exception) {
 
-            return catchErrors("Failed to register user: ", exception);
+            return CatchErrorResponses.catchErrors("Failed to register user: ", exception);
 
         }
 
@@ -76,7 +77,7 @@ public class AuthenticationService {
 
         } catch (Exception exception) {
 
-            return catchErrors("Failed to login user: ", exception);
+            return CatchErrorResponses.catchErrors("Failed to login user: ", exception);
         }
 
     }
@@ -123,18 +124,10 @@ public class AuthenticationService {
 
         } catch (Exception exception) {
 
-            return catchErrors("Failed to send password reset email: ", exception);
+            return CatchErrorResponses.catchErrors("Failed to send password reset email: ", exception);
         }
 
 
-    }
-
-    private static ResponseEntity<ApiResponse> catchErrors(String x, Exception exception) {
-        String errorMessage = x + exception.getMessage();
-
-        ApiResponse errorResponse = new ApiResponse(errorMessage, null, null);
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }
 
     public ResponseEntity<ApiResponse> passwordReset(PasswordResetRequest request) {
@@ -156,7 +149,7 @@ public class AuthenticationService {
 
         } catch (Exception exception) {
 
-            return catchErrors("Failed to send password reset email: ", exception);
+            return CatchErrorResponses.catchErrors("Failed to send password reset email: ", exception);
         }
 
     }
@@ -214,6 +207,7 @@ public class AuthenticationService {
         User user = new User();
 
         assert registrationRequest != null;
+
         user.setName(registrationRequest.getName());
 
         user.setEmail(registrationRequest.getEmail());
