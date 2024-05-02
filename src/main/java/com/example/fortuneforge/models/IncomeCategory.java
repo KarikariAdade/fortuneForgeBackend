@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Setter
 @Getter
 @RequiredArgsConstructor
@@ -26,4 +29,6 @@ public class IncomeCategory {
     @JsonIgnore
     private User user;
 
+    @OneToMany(mappedBy = "incomeCategory", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Income> incomes;
 }

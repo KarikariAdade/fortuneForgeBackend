@@ -12,12 +12,17 @@ import com.example.fortuneforge.requests.authentication.LoginRequest;
 import com.example.fortuneforge.requests.authentication.PasswordResetRequest;
 import com.example.fortuneforge.requests.authentication.RegistrationRequest;
 import com.example.fortuneforge.config.ApiResponse;
+import com.example.fortuneforge.service_impl.UserDetailServiceImpl;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +43,7 @@ public class AuthenticationService {
     private final TokenRepository tokenRepository;
     private final AuthEmailService emailService;
     private final PasswordResetRepository passwordResetRepository;
+    private final UserDetailServiceImpl userDetailService;
 
     public ResponseEntity<ApiResponse> registerUser(RegistrationRequest request) {
 
@@ -219,5 +225,20 @@ public class AuthenticationService {
         user.setRole(Role.valueOf(registrationRequest.getRole()));
 
         return user;
+    }
+
+    public User retrieveUserFromToken(String token) {
+
+        String requestToken = token.substring(7);
+
+        String username = jwtService.extractUsername(requestToken);
+
+        if (username != null) {
+
+            return (User) userDetailService.loadUserByUsername(username);
+        }
+
+        return null;
+
     }
 }

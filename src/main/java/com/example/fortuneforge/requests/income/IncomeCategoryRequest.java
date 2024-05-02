@@ -18,8 +18,4 @@ public class IncomeCategoryRequest {
 
     private String description;
 
-    @NotEmpty(message = "User ID is required")
-    @NotBlank(message = "User ID is required")
-    @NotNull(message = "User ID is required")
-    private Long userId;
 }

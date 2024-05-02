@@ -64,6 +64,10 @@ public class JwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
+    public String extractUserId(String token) {
+        return extractClaim(token, Claims::getId);
+    }
+
     // Checks if token is valid
     public boolean isValid (String token, UserDetails user) {
 

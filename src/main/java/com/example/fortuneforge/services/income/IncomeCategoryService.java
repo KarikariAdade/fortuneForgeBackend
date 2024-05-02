@@ -7,16 +7,21 @@ import com.example.fortuneforge.models.User;
 import com.example.fortuneforge.repositories.IncomeCategoryRepository;
 import com.example.fortuneforge.repositories.UserRepository;
 import com.example.fortuneforge.requests.income.IncomeCategoryRequest;
+import com.example.fortuneforge.services.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.List;
 import java.util.Optional;
+
+import static io.jsonwebtoken.lang.Objects.isEmpty;
 
 @RequiredArgsConstructor
 @Service
@@ -26,13 +31,23 @@ public class IncomeCategoryService {
 
     private final UserRepository userRepository;
 
-    public ResponseEntity<ApiResponse> getIncomeCategories(@RequestBody IncomeCategoryRequest request) {
+    private final AuthenticationService authenticationService;
+
+    public ResponseEntity<ApiResponse> getIncomeCategories(String token) {
+
+       User user = authenticationService.retrieveUserFromToken(token);
 
         try {
 
-            List<IncomeCategory> incomeCategories = incomeCategoryRepository.findByUserIdOrderByIdDesc(request.getUserId());
+            if (!isEmpty(user)) {
 
-            return ResponseEntity.ok(new ApiResponse("User categories retrieved successfully", incomeCategories, null));
+                List<IncomeCategory> incomeCategories = incomeCategoryRepository.findByUserIdOrderByIdDesc(user.getId());
+
+                return ResponseEntity.ok(new ApiResponse("User categories retrieved successfully", incomeCategories, null));
+
+            }
+
+            return new ResponseEntity<>(new ApiResponse("User not found", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
 
         } catch (Exception exception) {
 
@@ -41,17 +56,17 @@ public class IncomeCategoryService {
 
     }
 
-    public ResponseEntity<ApiResponse> addIncomeCategory(@RequestBody @Valid IncomeCategoryRequest request) {
+    public ResponseEntity<ApiResponse> addIncomeCategory(String token, @RequestBody @Valid IncomeCategoryRequest request) {
 
         try {
 
+            User user = authenticationService.retrieveUserFromToken(token);
+
             IncomeCategory incomeCategory = new IncomeCategory();
 
-            Optional<User> user = userRepository.findById(request.getUserId());
+            if (!isEmpty(user)) {
 
-            if (user.isPresent()) {
-
-                incomeCategory.setUser(user.get());
+                incomeCategory.setUser(user);
 
                 incomeCategory.setName(request.getName());
 
@@ -59,17 +74,16 @@ public class IncomeCategoryService {
 
                 incomeCategoryRepository.save(incomeCategory);
 
-                return ResponseEntity.ok(new ApiResponse("User categories retrieved successfully", incomeCategory, null));
+                return ResponseEntity.ok(new ApiResponse("User category created successfully", incomeCategory, null));
             }
 
             return new ResponseEntity<>(new ApiResponse("User not found", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
 
         } catch (Exception exception) {
 
-            return CatchErrorResponses.catchErrors("Categories not found", exception);
+            return CatchErrorResponses.catchErrors("Category could not be created", exception);
 
         }
-
 
     }
 
