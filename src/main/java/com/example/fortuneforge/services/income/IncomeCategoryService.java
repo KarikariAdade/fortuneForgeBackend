@@ -4,7 +4,7 @@ import com.example.fortuneforge.config.ApiResponse;
 import com.example.fortuneforge.config.CatchErrorResponses;
 import com.example.fortuneforge.models.IncomeCategory;
 import com.example.fortuneforge.models.User;
-import com.example.fortuneforge.repositories.IncomeCategoryRepository;
+import com.example.fortuneforge.repositories.income.IncomeCategoryRepository;
 import com.example.fortuneforge.repositories.UserRepository;
 import com.example.fortuneforge.requests.income.IncomeCategoryRequest;
 import com.example.fortuneforge.services.AuthenticationService;
@@ -12,11 +12,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.List;
 import java.util.Optional;
@@ -104,6 +102,7 @@ public class IncomeCategoryService {
             }
 
             return new ResponseEntity<>(new ApiResponse("Income category not found", null, null), HttpStatus.OK);
+
         } catch (Exception exception) {
 
             return CatchErrorResponses.catchErrors("Income category not found", exception);

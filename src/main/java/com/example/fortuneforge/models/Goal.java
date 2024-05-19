@@ -2,19 +2,19 @@ package com.example.fortuneforge.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Getter
 @Setter
+@Getter
 @Entity
-@RequiredArgsConstructor
-@Builder
-@AllArgsConstructor
-public class PasswordResets {
+public class Goal {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -25,17 +25,28 @@ public class PasswordResets {
     @JsonIgnore
     private User user;
 
-    private String token;
+    private double targetAmount;
 
-    private LocalDateTime expiryDate;
+    private double currentAmount;
 
-    private boolean isUsed;
+    private LocalDate startDate;
+
+    private LocalDate endDate;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "goal_category_id")
+    private GoalCategory goalCategory;
+
+    @Enumerated(value = EnumType.STRING)
+    private GoalStatus status;
+
+    @Enumerated(value = EnumType.STRING)
+    private GoalPriority priority;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
-
 
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)

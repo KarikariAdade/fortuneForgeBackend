@@ -1,7 +1,6 @@
-package com.example.fortuneforge.repositories;
+package com.example.fortuneforge.repositories.income;
 
 import com.example.fortuneforge.models.IncomeCategory;
-import com.example.fortuneforge.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

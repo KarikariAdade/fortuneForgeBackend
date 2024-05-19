@@ -58,11 +58,13 @@ public class User implements UserDetails {
     private LocalDateTime updatedAt;
 
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<PasswordResets> passwordResets;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<IncomeCategory> incomeCategories;
+
+
 
     public User() {
 

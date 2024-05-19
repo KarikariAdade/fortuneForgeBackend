@@ -1,4 +1,4 @@
-package com.example.fortuneforge.controllers;
+package com.example.fortuneforge.controllers.income;
 
 import com.example.fortuneforge.config.ApiResponse;
 import com.example.fortuneforge.requests.income.IncomeCategoryRequest;
@@ -16,8 +16,10 @@ public class IncomeCategoryController {
     private final IncomeCategoryService incomeCategoryService;
 
     @PostMapping("")
-    public ResponseEntity<ApiResponse> getAllCategories (@RequestHeader("Authorization") String token) {
+    public ResponseEntity<ApiResponse> getAllCategories (@RequestHeader("Authorization") String token, @RequestBody IncomeCategoryRequest request) {
 
+//        return ResponseEntity.ok(new ApiResponse("User categories retrieved successfully", token, null));
+//
         return incomeCategoryService.getIncomeCategories(token);
 
     }

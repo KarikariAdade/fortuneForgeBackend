@@ -1,44 +1,50 @@
 package com.example.fortuneforge.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Getter
 @Setter
+@Getter
 @Entity
-@RequiredArgsConstructor
-@Builder
-@AllArgsConstructor
-public class PasswordResets {
+public class GoalTransaction {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "goal_id")
+    private Goal goal;
+
+    @Enumerated(value = EnumType.STRING)
+    private GoalTransactionType type;
+
+    private double amount;
+
+    private LocalDate date;
+
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String description;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    @JsonIgnore
     private User user;
-
-    private String token;
-
-    private LocalDateTime expiryDate;
-
-    private boolean isUsed;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
 }
