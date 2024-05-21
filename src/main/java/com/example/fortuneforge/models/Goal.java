@@ -33,8 +33,9 @@ public class Goal {
 
     private LocalDate endDate;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "goal_category_id")
+    @JsonIgnore
     private GoalCategory goalCategory;
 
     @Enumerated(value = EnumType.STRING)

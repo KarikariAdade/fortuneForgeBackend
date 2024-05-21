@@ -6,13 +6,13 @@ import org.springframework.http.ResponseEntity;
 
 public interface GoalCategoryService {
 
-    public ResponseEntity<ApiResponse> getGoalCategories (String token);
+    ResponseEntity<ApiResponse> getGoalCategories(String token);
 
-    public ResponseEntity<ApiResponse> createGoalCategory (String token, GoalCategoryRequest request);
+    ResponseEntity<ApiResponse> createGoalCategory (String token, GoalCategoryRequest request);
 
-    public ResponseEntity<ApiResponse> updateGoalCategory (Long id, GoalCategoryRequest request);
+    ResponseEntity<ApiResponse> updateGoalCategory(String token, Long id, GoalCategoryRequest request);
 
-    public ResponseEntity<ApiResponse> deleteGoalCategory (Long id);
+    ResponseEntity<ApiResponse> deleteGoalCategory(String token, Long id);
 
 
 }
