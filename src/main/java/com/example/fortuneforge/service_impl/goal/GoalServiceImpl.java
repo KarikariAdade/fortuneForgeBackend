@@ -14,7 +14,23 @@ public class GoalServiceImpl implements GoalService {
     }
 
     @Override
-    public ResponseEntity<ApiResponse> createGoal(String token, GoalRequest goalRequest) {
+    public ResponseEntity<ApiResponse> storeGoal(String token, GoalRequest goalRequest) {
         return null;
     }
+
+    @Override
+    public ResponseEntity<ApiResponse> updateGoal(String token, Long id, GoalRequest goalRequest) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse> deleteGoal(String token, Long id) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse> getGoalDetails(String token, Long id) {
+        return null;
+    }
+
 }

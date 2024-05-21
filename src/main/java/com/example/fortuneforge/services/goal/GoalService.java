@@ -6,7 +6,13 @@ import org.springframework.http.ResponseEntity;
 
 public interface GoalService {
 
-    public ResponseEntity<ApiResponse> getGoals(String token);
+    ResponseEntity<ApiResponse> getGoals(String token);
 
-    public ResponseEntity<ApiResponse> createGoal(String token, GoalRequest goalRequest);
+    ResponseEntity<ApiResponse> storeGoal(String token, GoalRequest goalRequest);
+
+    ResponseEntity<ApiResponse> updateGoal(String token, Long id, GoalRequest goalRequest);
+
+    ResponseEntity<ApiResponse> deleteGoal(String token, Long id);
+
+    ResponseEntity<ApiResponse> getGoalDetails(String token, Long id);
 }
