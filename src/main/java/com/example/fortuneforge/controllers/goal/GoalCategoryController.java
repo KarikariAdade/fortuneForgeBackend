@@ -8,6 +8,8 @@ import com.example.fortuneforge.repositories.goal.GoalCategoryRepository;
 import com.example.fortuneforge.requests.goal.GoalCategoryRequest;
 import com.example.fortuneforge.service_impl.goal.GoalCategoryServiceImpl;
 import com.example.fortuneforge.services.AuthenticationService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,8 @@ import java.util.List;
 @RestController
 @RequestMapping("goal/category")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "Authorization")
+@Tag(name = "Goal Categories", description = "Goal Controller Management")
 public class GoalCategoryController {
 
     private final GoalCategoryServiceImpl goalCategoryService;

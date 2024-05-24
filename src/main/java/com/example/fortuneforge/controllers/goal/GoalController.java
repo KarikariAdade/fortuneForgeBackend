@@ -3,6 +3,7 @@ package com.example.fortuneforge.controllers.goal;
 import com.example.fortuneforge.config.ApiResponse;
 import com.example.fortuneforge.requests.goal.GoalRequest;
 import com.example.fortuneforge.service_impl.goal.GoalServiceImpl;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("goal")
 @RequiredArgsConstructor
+@Tag(name = "Goals", description = "Goal Management")
 public class GoalController {
 
     private final GoalServiceImpl goalService;

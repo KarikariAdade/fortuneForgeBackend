@@ -3,6 +3,7 @@ package com.example.fortuneforge.controllers.income;
 import com.example.fortuneforge.config.ApiResponse;
 import com.example.fortuneforge.requests.income.IncomeRequest;
 import com.example.fortuneforge.services.income.IncomeService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +14,10 @@ import java.util.*;
 @RestController
 @RequestMapping("income")
 @RequiredArgsConstructor
+@Tag(name = "Income", description = "Income Management")
 public class IncomeController {
 
     private final IncomeService incomeService;
-
     @GetMapping("/")
     public ResponseEntity<ApiResponse> getAllIncome(@RequestHeader("Authorization") String token) {
 

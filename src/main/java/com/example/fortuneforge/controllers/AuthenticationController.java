@@ -8,6 +8,7 @@ import com.example.fortuneforge.requests.authentication.PasswordResetRequest;
 import com.example.fortuneforge.requests.authentication.RegistrationRequest;
 import com.example.fortuneforge.services.AuthEmailService;
 import com.example.fortuneforge.services.AuthenticationService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RequestMapping("auth")
 @Validated
+@Tag(name = "Authentication", description = "User Authentication")
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
