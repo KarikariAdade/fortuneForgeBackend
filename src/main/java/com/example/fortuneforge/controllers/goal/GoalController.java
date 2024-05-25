@@ -4,6 +4,7 @@ import com.example.fortuneforge.config.ApiResponse;
 import com.example.fortuneforge.requests.goal.GoalRequest;
 import com.example.fortuneforge.service_impl.goal.GoalServiceImpl;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class GoalController {
 
 
     @PostMapping("store")
-    public ResponseEntity<ApiResponse> store(@RequestHeader("Authorization") String token, @RequestBody GoalRequest request) {
+    public ResponseEntity<ApiResponse> store(@RequestHeader("Authorization") String token, @RequestBody @Valid GoalRequest request) {
         return goalService.storeGoal(token, request);
     }
 
@@ -33,7 +34,7 @@ public class GoalController {
     }
 
     @PostMapping("update/{id}")
-    public ResponseEntity<ApiResponse> updateGoal(@RequestHeader("Authorization") String token, @PathVariable Long id, @RequestBody GoalRequest request) {
+    public ResponseEntity<ApiResponse> updateGoal(@RequestHeader("Authorization") String token, @PathVariable Long id, @RequestBody @Valid GoalRequest request) {
         return goalService.updateGoal(token, id, request);
     }
 

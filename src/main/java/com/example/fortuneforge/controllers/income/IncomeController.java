@@ -49,8 +49,9 @@ public class IncomeController {
 
     @PostMapping("delete/bulk")
     public ResponseEntity<ApiResponse> deleteBulk(@RequestBody List<HashMap<?, Object>> requests) {
-//        System.out.println(requests.stream().toString());
+
         return this.incomeService.deleteBulk(requests);
+
     }
 
 

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -21,6 +22,7 @@ public class AuthEmailService {
 
     private final TemplateEngine templateEngine;
 
+    @Async
     public void sendEmail(String to, String subject, String templateName, Context context) {
 
         MimeMessage message = emailSender.createMimeMessage();

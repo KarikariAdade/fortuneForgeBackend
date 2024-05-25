@@ -20,8 +20,6 @@ public class IncomeCategoryController {
     @PostMapping("")
     public ResponseEntity<ApiResponse> getAllCategories (@RequestHeader("Authorization") String token, @RequestBody IncomeCategoryRequest request) {
 
-//        return ResponseEntity.ok(new ApiResponse("User categories retrieved successfully", token, null));
-//
         return incomeCategoryService.getIncomeCategories(token);
 
     }

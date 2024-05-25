@@ -41,7 +41,7 @@ public class GoalCategoryController {
     }
 
     @PostMapping("/update/{id}")
-    public ResponseEntity<ApiResponse> updateGoalCategory(@RequestHeader("Authorization") String token, @PathVariable Long id, @RequestBody GoalCategoryRequest request) {
+    public ResponseEntity<ApiResponse> updateGoalCategory(@RequestHeader("Authorization") String token, @PathVariable Long id, @RequestBody @Valid GoalCategoryRequest request) {
 
         return this.goalCategoryService.updateGoalCategory(token, id, request);
 

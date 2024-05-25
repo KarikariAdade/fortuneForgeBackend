@@ -79,7 +79,7 @@ public class AuthenticationService {
 
             saveUserToken(jwt, user);
 
-            return ResponseEntity.ok(new ApiResponse("User saved successfully: " + jwt, user, jwt));
+            return ResponseEntity.ok(new ApiResponse("User saved successfully: ", user, jwt));
 
         } catch (Exception exception) {
 

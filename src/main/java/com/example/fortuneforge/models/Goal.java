@@ -9,6 +9,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -20,10 +22,12 @@ public class Goal {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
+
+    private String name;
 
     private double targetAmount;
 
@@ -33,9 +37,9 @@ public class Goal {
 
     private LocalDate endDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "goal_category_id")
-    @JsonIgnore
+//    @JsonIgnore
     private GoalCategory goalCategory;
 
     @Enumerated(value = EnumType.STRING)
@@ -43,6 +47,12 @@ public class Goal {
 
     @Enumerated(value = EnumType.STRING)
     private GoalPriority priority;
+
+    @OneToMany(mappedBy = "goal", cascade = CascadeType.ALL)
+    private Set<GoalTransaction> transactions;
+
+    @OneToMany(mappedBy = "goal", cascade = CascadeType.ALL)
+    private Set<GoalContribution> contributions;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
