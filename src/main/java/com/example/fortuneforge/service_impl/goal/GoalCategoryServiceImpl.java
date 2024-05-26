@@ -1,6 +1,7 @@
 package com.example.fortuneforge.service_impl.goal;
 
 import com.example.fortuneforge.config.ApiResponse;
+import com.example.fortuneforge.config.CatchErrorResponses;
 import com.example.fortuneforge.models.GoalCategory;
 import com.example.fortuneforge.models.User;
 import com.example.fortuneforge.repositories.goal.GoalCategoryRepository;
@@ -27,87 +28,122 @@ public class GoalCategoryServiceImpl implements GoalCategoryService {
     @Override
     public ResponseEntity<ApiResponse> getGoalCategories(String token) {
 
-        User user = authenticationService.retrieveUserFromToken(token);
+        try {
+            User user = authenticationService.retrieveUserFromToken(token);
 
-        if (!isEmpty(user)) {
-            List<GoalCategory> category = goalCategoryRepository.findByUserIdOrderByIdDesc(user.getId());
+            if (!isEmpty(user)) {
+                List<GoalCategory> category = goalCategoryRepository.findByUserIdOrderByIdDesc(user.getId());
 
-            return ResponseEntity.ok(new ApiResponse("User categories retrieved successfully", category, null));
+                return ResponseEntity.ok(new ApiResponse("User categories retrieved successfully", category, null));
+            }
+
+            return ResponseEntity.ok(new ApiResponse("User not found", null, null));
+
+        }catch (Exception exception) {
+
+            return CatchErrorResponses.catchErrors("Goal Categories not found", exception);
+
         }
-
-        return ResponseEntity.ok(new ApiResponse("User not found", null, null));
 
     }
 
     @Override
     public ResponseEntity<ApiResponse> createGoalCategory(String token, GoalCategoryRequest request) {
-        User user = authenticationService.retrieveUserFromToken(token);
 
-        if (!isEmpty(user)) {
+        try {
 
-            GoalCategory goalCategory = new GoalCategory();
+            User user = authenticationService.retrieveUserFromToken(token);
 
-            goalCategory.setUser(user);
+            if (!isEmpty(user)) {
 
-            goalCategory.setName(request.getName());
+                GoalCategory goalCategory = new GoalCategory();
 
-            goalCategory.setDescription(request.getDescription());
+                goalCategory.setUser(user);
 
-            goalCategoryRepository.save(goalCategory);
+                goalCategory.setName(request.getName());
 
-            return ResponseEntity.ok(new ApiResponse("Goal category created successfully", goalCategory, null));
+                goalCategory.setDescription(request.getDescription());
+
+                goalCategoryRepository.save(goalCategory);
+
+                return ResponseEntity.ok(new ApiResponse("Goal category created successfully", goalCategory, null));
+
+            }
+
+            return ResponseEntity.ok(new ApiResponse("User not found", null, null));
+
+        }catch (Exception exception) {
+
+            return CatchErrorResponses.catchErrors("Goal category could not be created", exception);
 
         }
-
-        return ResponseEntity.ok(new ApiResponse("User not found", null, null));
     }
 
     @Override
     public ResponseEntity<ApiResponse> updateGoalCategory(String token, Long id, GoalCategoryRequest request) {
-        User user = authenticationService.retrieveUserFromToken(token);
 
-        if (!isEmpty(user)) {
+        try {
 
-            GoalCategory category = goalCategoryRepository.findById(id).orElse(null);
+            User user = authenticationService.retrieveUserFromToken(token);
 
-            if (category != null) {
+            if (!isEmpty(user)) {
 
-                category.setName(request.getName());
+                GoalCategory category = goalCategoryRepository.findById(id).orElse(null);
 
-                category.setDescription(request.getDescription());
+                if (category != null) {
 
-                goalCategoryRepository.save(category);
+                    category.setName(request.getName());
 
-                return ResponseEntity.ok(new ApiResponse("Goal category updated successfully", category, null));
+                    category.setDescription(request.getDescription());
+
+                    goalCategoryRepository.save(category);
+
+                    return ResponseEntity.ok(new ApiResponse("Goal category updated successfully", category, null));
+
+                }
 
             }
 
-        }
+            return ResponseEntity.ok(new ApiResponse("User not found", null, null));
 
-        return ResponseEntity.ok(new ApiResponse("User not found", null, null));
+        }catch (Exception exception) {
+
+            return CatchErrorResponses.catchErrors("Goal category update unsuccessful", exception);
+
+        }
     }
 
     @Override
     public ResponseEntity<ApiResponse> deleteGoalCategory(String token, Long id) {
-        User user = authenticationService.retrieveUserFromToken(token);
 
-        if (!isEmpty(user)) {
-            GoalCategory category = goalCategoryRepository.findById(id).orElse(null);
+        try {
 
-            if (!isEmpty(category) && !isEmpty(category.getGoals())) {
+            User user = authenticationService.retrieveUserFromToken(token);
 
-                return new ResponseEntity<>(new ApiResponse("Category has goals and cannot be deleted.", category.getGoals(), null), HttpStatus.INTERNAL_SERVER_ERROR);
+            if (!isEmpty(user)) {
+                GoalCategory category = goalCategoryRepository.findById(id).orElse(null);
 
-            }else {
+                if (!isEmpty(category) && !isEmpty(category.getGoals())) {
 
-                goalCategoryRepository.deleteById(category.getId());
+                    return new ResponseEntity<>(new ApiResponse("Category has goals and cannot be deleted.", category.getGoals(), null), HttpStatus.INTERNAL_SERVER_ERROR);
 
-                return ResponseEntity.ok(new ApiResponse("Category deleted successfully", category, null));
+                }else {
+
+                    goalCategoryRepository.deleteById(category.getId());
+
+                    return ResponseEntity.ok(new ApiResponse("Category deleted successfully", category, null));
+
+                }
 
             }
 
+            return ResponseEntity.ok(new ApiResponse("User not found", null, null));
+
+        }catch (Exception exception) {
+
+            return CatchErrorResponses.catchErrors("Goal category deletion failed", exception);
+
         }
 
-        return ResponseEntity.ok(new ApiResponse("User not found", null, null));
     }
 }

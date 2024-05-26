@@ -1,6 +1,7 @@
 package com.example.fortuneforge.service_impl.goal;
 
 import com.example.fortuneforge.config.ApiResponse;
+import com.example.fortuneforge.config.CatchErrorResponses;
 import com.example.fortuneforge.models.Goal;
 import com.example.fortuneforge.models.GoalCategory;
 import com.example.fortuneforge.models.User;
@@ -34,88 +35,119 @@ public class GoalServiceImpl implements GoalService {
     @Override
     public ResponseEntity<ApiResponse> getGoals(String token) {
 
-        User user = authenticationService.retrieveUserFromToken(token);
+        try {
+            User user = authenticationService.retrieveUserFromToken(token);
 
-        if (!isEmpty(user)) {
+            if (!isEmpty(user)) {
 
-            List<Goal> goals = goalRepository.findGoalByUserId(user.getId());
+                List<Goal> goals = goalRepository.findGoalByUserId(user.getId());
 
-            return ResponseEntity.ok(new ApiResponse("User goals retrieved successfully", goals, null));
+                return ResponseEntity.ok(new ApiResponse("User goals retrieved successfully", goals, null));
 
+            }
+
+            return new ResponseEntity<>(new ApiResponse("User goal could not be retrieved.", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
+
+        } catch (Exception exception) {
+            return CatchErrorResponses.catchErrors("Goals could not be retrieved", exception);
         }
 
-        return new ResponseEntity<>(new ApiResponse("User goal could not be retrieved.", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
 
     @Override
     public ResponseEntity<ApiResponse> storeGoal(String token, GoalRequest goalRequest) {
 
-        User user = authenticationService.retrieveUserFromToken(token);
+        try {
+            User user = authenticationService.retrieveUserFromToken(token);
 
-        if (!isEmpty(user)) {
+            if (!isEmpty(user)) {
 
-            Optional<GoalCategory> goalCategory = goalCategoryRepository.findById(Long.parseLong(goalRequest.getGoalCategory()));
+                Optional<GoalCategory> goalCategory = goalCategoryRepository.findById(Long.parseLong(goalRequest.getGoalCategory()));
 
-            if (goalCategory.isPresent()) {
+                if (goalCategory.isPresent()) {
 
-                goalRepository.save(setGoalData(goalRequest, goalCategory, user));
+                    goalRepository.save(setGoalData(goalRequest, goalCategory, user));
 
-                return new ResponseEntity<>(new ApiResponse("Goal added successfully", goalRequest, null), HttpStatus.OK);
+                    return new ResponseEntity<>(new ApiResponse("Goal added successfully", goalRequest, null), HttpStatus.OK);
+
+                }
+
+                return new ResponseEntity<>(new ApiResponse("Goal Category could not be retrieved.", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
 
             }
 
-            return new ResponseEntity<>(new ApiResponse("Goal Category could not be retrieved.", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ApiResponse("User could not be retrieved.", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
+
+        } catch (Exception exception) {
+
+            return CatchErrorResponses.catchErrors("Goal could not be stored. Kindly try again", exception);
 
         }
-
-        return new ResponseEntity<>(new ApiResponse("User could not be retrieved.", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
     @Override
     public ResponseEntity<ApiResponse> updateGoal(String token, Long id, GoalRequest goalRequest) {
-        User user = authenticationService.retrieveUserFromToken(token);
 
-        if (!isEmpty(user)) {
-            Optional<GoalCategory> goalCategory = goalCategoryRepository.findById(Long.parseLong(goalRequest.getGoalCategory()));
+        try {
+            User user = authenticationService.retrieveUserFromToken(token);
 
-            if (goalCategory.isPresent()) {
+            if (!isEmpty(user)) {
+                Optional<GoalCategory> goalCategory = goalCategoryRepository.findById(Long.parseLong(goalRequest.getGoalCategory()));
 
-                Goal goal = goalRepository.findById(id).orElse(null);
+                if (goalCategory.isPresent()) {
 
-                if (goal!= null) {
+                    Goal goal = goalRepository.findById(id).orElse(null);
 
-                    updateGoal(goalRequest, goal, goalCategory, user);
+                    if (goal!= null) {
 
-                    return ResponseEntity.ok(new ApiResponse("Goal updated successfully.", null, null));
+                        updateGoal(goalRequest, goal, goalCategory, user);
+
+                        return ResponseEntity.ok(new ApiResponse("Goal updated successfully.", null, null));
+                    }
+
+                    return new ResponseEntity<>(new ApiResponse("Goal not found.", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
+
                 }
 
-                return new ResponseEntity<>(new ApiResponse("Goal not found.", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
-
+                return new ResponseEntity<>(new ApiResponse("Goal Category could not be retrieved.", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
-            return new ResponseEntity<>(new ApiResponse("Goal Category could not be retrieved.", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ApiResponse("User not found.", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
+
+        } catch (Exception exception) {
+
+            return CatchErrorResponses.catchErrors("Goal Update failed. Kindly try again", exception);
+
         }
 
-        return new ResponseEntity<>(new ApiResponse("User not found.", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
 
     @Override
     public ResponseEntity<ApiResponse> deleteGoal(String token, Long id) {
-        User user = authenticationService.retrieveUserFromToken(token);
 
-        if (!isEmpty(user)) {
+        try {
+            User user = authenticationService.retrieveUserFromToken(token);
 
-            goalRepository.findById(id).ifPresent(goalRepository::delete);
+            if (!isEmpty(user)) {
 
-            return new ResponseEntity<>(new ApiResponse("Goal deleted successfully.", null, null), HttpStatus.OK);
+                goalRepository.findById(id).ifPresent(goalRepository::delete);
+
+                return new ResponseEntity<>(new ApiResponse("Goal deleted successfully.", null, null), HttpStatus.OK);
+
+            }
+
+            return new ResponseEntity<>(new ApiResponse("User could not be retrieved.", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
+
+        } catch (Exception exception) {
+
+            return CatchErrorResponses.catchErrors("Goal could not be deleted", exception);
 
         }
 
-        return new ResponseEntity<>(new ApiResponse("User could not be retrieved.", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Override
