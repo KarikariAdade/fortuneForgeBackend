@@ -1,5 +1,6 @@
 package com.example.fortuneforge.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,7 @@ public class GoalContribution {
 
     @ManyToOne
     @JoinColumn(name = "goal_id")
+    @JsonIgnore
     private Goal goal;
 
     private double amount;
@@ -29,6 +31,7 @@ public class GoalContribution {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     @Column(columnDefinition = "TEXT", nullable = true)
