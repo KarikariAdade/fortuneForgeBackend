@@ -9,6 +9,7 @@ import com.example.fortuneforge.repositories.goal.GoalCategoryRepository;
 import com.example.fortuneforge.repositories.goal.GoalRepository;
 import com.example.fortuneforge.requests.goal.GoalRequest;
 import com.example.fortuneforge.services.AuthenticationService;
+import com.example.fortuneforge.services.SmsService;
 import com.example.fortuneforge.services.goal.GoalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,8 @@ public class GoalServiceImpl implements GoalService {
     private final AuthenticationService authenticationService;
 
     private final GoalCategoryRepository goalCategoryRepository;
+
+    private final SmsService smsService;
 
     @Override
     public ResponseEntity<ApiResponse> getGoals(String token) {
@@ -68,6 +71,8 @@ public class GoalServiceImpl implements GoalService {
                 if (goalCategory.isPresent()) {
 
                     goalRepository.save(setGoalData(goalRequest, goalCategory, user));
+
+                    smsService.sendSms("0548876922", "You created a new goal with the name " + goalRequest.getName() + "Start Date: " + goalRequest.getStartDate() + " End Date: " + goalRequest.getEndDate());
 
                     return new ResponseEntity<>(new ApiResponse("Goal added successfully", goalRequest, null), HttpStatus.OK);
 

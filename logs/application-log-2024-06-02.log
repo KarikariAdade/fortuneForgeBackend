@@ -1,0 +1,61 @@
+2024-06-02 10:16:43 [restartedMain] INFO  c.e.f.FortuneForgeApplication - Starting FortuneForgeApplication using Java 21.0.2 with PID 21096 (D:\Projects\IdeaProjects\fortuneForge\target\classes started by Bizzle in D:\Projects\IdeaProjects\fortuneForge)
+2024-06-02 10:16:43 [restartedMain] INFO  c.e.f.FortuneForgeApplication - No active profile set, falling back to 1 default profile: "default"
+2024-06-02 10:16:43 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-06-02 10:16:43 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 21 ms. Found 9 JPA repository interfaces.
+2024-06-02 10:16:44 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-06-02 10:16:44 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-06-02 10:16:44 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-06-02 10:16:44 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2024-06-02 10:16:44 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-06-02 10:16:44 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 497 ms
+2024-06-02 10:16:44 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-06-02 10:16:44 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-06-02 10:16:44 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-06-02 10:16:44 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Starting...
+2024-06-02 10:16:44 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5e295f87
+2024-06-02 10:16:44 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Start completed.
+2024-06-02 10:16:44 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-06-02 10:16:44 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-06-02 10:16:44 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-06-02 10:16:45 [restartedMain] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6da203c6, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7555e0bf, org.springframework.security.web.context.SecurityContextHolderFilter@2162573f, org.springframework.security.web.header.HeaderWriterFilter@7ebf09ff, org.springframework.web.filter.CorsFilter@767ce31a, org.springframework.security.web.authentication.logout.LogoutFilter@33e5715c, com.example.fortuneforge.filters.JwtAuthenticationFilter@4d95020b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@44ef9fc0, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@42998653, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@193ef87b, org.springframework.security.web.session.SessionManagementFilter@34bedd00, org.springframework.security.web.access.ExceptionTranslationFilter@1d8f0ce7, org.springframework.security.web.access.intercept.AuthorizationFilter@5695d5b]
+2024-06-02 10:16:45 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-06-02 10:16:45 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-06-02 10:16:45 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-06-02 10:16:45 [restartedMain] INFO  c.e.f.FortuneForgeApplication - Started FortuneForgeApplication in 1.853 seconds (process running for 69.649)
+2024-06-02 10:16:45 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2024-06-02 10:16:45 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-06-02 10:16:45 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Shutdown initiated...
+2024-06-02 10:16:45 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Shutdown completed.
+2024-06-02 10:16:48 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2024-06-02 10:16:48 [restartedMain] INFO  c.e.f.FortuneForgeApplication - Starting FortuneForgeApplication using Java 21.0.2 with PID 25580 (D:\Projects\IdeaProjects\fortuneForge\target\classes started by Bizzle in D:\Projects\IdeaProjects\fortuneForge)
+2024-06-02 10:16:48 [restartedMain] INFO  c.e.f.FortuneForgeApplication - No active profile set, falling back to 1 default profile: "default"
+2024-06-02 10:16:48 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-06-02 10:16:48 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-06-02 10:16:49 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-06-02 10:16:49 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 65 ms. Found 9 JPA repository interfaces.
+2024-06-02 10:16:49 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-06-02 10:16:49 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-06-02 10:16:49 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-06-02 10:16:49 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2024-06-02 10:16:49 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-06-02 10:16:49 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1524 ms
+2024-06-02 10:16:49 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-06-02 10:16:50 [restartedMain] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-06-02 10:16:50 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-06-02 10:16:50 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-06-02 10:16:50 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-06-02 10:16:50 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@36d04330
+2024-06-02 10:16:50 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-06-02 10:16:51 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-06-02 10:16:51 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-06-02 10:16:52 [restartedMain] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-06-02 10:16:53 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-06-02 10:16:53 [restartedMain] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4036c42e, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4b366358, org.springframework.security.web.context.SecurityContextHolderFilter@ccde21, org.springframework.security.web.header.HeaderWriterFilter@d1a8f96, org.springframework.web.filter.CorsFilter@596bec07, org.springframework.security.web.authentication.logout.LogoutFilter@6e3a7c44, com.example.fortuneforge.filters.JwtAuthenticationFilter@d94bb0c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@56486216, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5f9bc8f9, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@44cda2f4, org.springframework.security.web.session.SessionManagementFilter@36afd999, org.springframework.security.web.access.ExceptionTranslationFilter@1e7a641d, org.springframework.security.web.access.intercept.AuthorizationFilter@632d04d4]
+2024-06-02 10:16:54 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-06-02 10:16:54 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-06-02 10:16:54 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-06-02 10:16:54 [restartedMain] INFO  c.e.f.FortuneForgeApplication - Started FortuneForgeApplication in 6.531 seconds (process running for 7.434)
+2024-06-02 10:17:07 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-06-02 10:17:07 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-06-02 10:17:07 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2024-06-02 10:17:09 [http-nio-8080-exec-2] INFO  c.e.fortuneforge.services.SmsService - Response from SMS API: {"status":"success","code":"2000","message":"messages sent successfully","summary":{"_id":"8DF2F0FC-2065-47E1-BA62-D6B5551C831D","type":"API QUICK SMS","total_sent":1,"contacts":1,"total_rejected":0,"numbers_sent":["0548876922"],"credit_used":1,"credit_left":1678}}
