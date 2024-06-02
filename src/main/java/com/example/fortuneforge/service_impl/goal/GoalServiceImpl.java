@@ -72,7 +72,7 @@ public class GoalServiceImpl implements GoalService {
 
                     goalRepository.save(setGoalData(goalRequest, goalCategory, user));
 
-                    smsService.sendSms("0548876922", "You created a new goal with the name " + goalRequest.getName() + "Start Date: " + goalRequest.getStartDate() + " End Date: " + goalRequest.getEndDate());
+                    smsService.sendSms(user.getPhone(), "You created a new goal with the name " + goalRequest.getName() + "Start Date: " + goalRequest.getStartDate() + " End Date: " + goalRequest.getEndDate());
 
                     return new ResponseEntity<>(new ApiResponse("Goal added successfully", goalRequest, null), HttpStatus.OK);
 
