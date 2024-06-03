@@ -10,19 +10,20 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/goal/contributions")
+@RequestMapping("goal/contributions")
 public class GoalContributionController {
 
     private final GoalContributionServiceImpl goalContributionService;
 
     @GetMapping("")
     public ResponseEntity<ApiResponse> getGoalContributions(@RequestHeader("Authorization") String token) {
+        System.out.println("goal contributors");
         return goalContributionService.getGoalContributions(token);
     }
 
     @PostMapping("store")
     public ResponseEntity<ApiResponse> storeGoalContribution(@RequestHeader("Authorization") String token, @RequestBody @Valid GoalContributionRequest request) {
-        return goalContributionService.storeGoalContribution(token, request);
+        return goalContributionService.storeContribution(token, request);
     }
 
     @GetMapping("details/{id}")

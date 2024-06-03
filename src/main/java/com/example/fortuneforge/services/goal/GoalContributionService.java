@@ -8,7 +8,7 @@ public interface GoalContributionService {
 
     ResponseEntity<ApiResponse> getGoalContributions(String token);
 
-    ResponseEntity<ApiResponse> storeGoalContribution(String token, GoalContributionRequest goalRequest);
+    ResponseEntity<ApiResponse> storeContribution(String token, GoalContributionRequest goalRequest);
 
     ResponseEntity<ApiResponse> updateGoalContribution(String token, Long id, GoalContributionRequest goalRequest);
 

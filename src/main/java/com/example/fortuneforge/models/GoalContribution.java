@@ -2,6 +2,7 @@ package com.example.fortuneforge.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @Entity
+
 public class GoalContribution {
 
     @Id
@@ -46,4 +48,8 @@ public class GoalContribution {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    public GoalContribution() {
+
+    }
 }
