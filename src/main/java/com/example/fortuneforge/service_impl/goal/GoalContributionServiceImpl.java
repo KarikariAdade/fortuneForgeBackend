@@ -119,7 +119,41 @@ public class GoalContributionServiceImpl implements GoalContributionService {
 
     @Override
     public ResponseEntity<ApiResponse> updateGoalContribution(String token, Long id, GoalContributionRequest request) {
-        return null;
+        try {
+            User user = authenticationService.retrieveUserFromToken(token);
+
+            if (!isEmpty(user)) {
+
+                Optional<GoalContribution> goalContribution = goalContributionRepository.findById(id);
+
+                Optional<Goal> goal = goalRepository.findById(Long.valueOf(request.getGoalId()));
+
+                if (goalContribution.isPresent() && goal.isPresent()) {
+
+                    double goalAmountRemaining = goal.get().getTargetAmount() - goal.get().getCurrentAmount();
+
+                    if (goalAmountRemaining < request.getAmount())
+                        return new ResponseEntity<>(new ApiResponse("Contribution amount exceeds the current remaining amount for the selected goal", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
+
+
+                    goalContributionRepository.save(generateGoalContributionData(request, goalContribution.get(), user, goal));
+
+                    return ResponseEntity.ok(new ApiResponse("Goal Contribution updated successfully", goalContribution.get(), null));
+
+                }
+
+                return new ResponseEntity<>(new ApiResponse("Goal Contribution not found", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
+
+
+            }
+
+            return new ResponseEntity<>(new ApiResponse("User not found", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
+
+        } catch (Exception exception) {
+
+            return CatchErrorResponses.catchErrors("Goal Contributions could not be updated. Kindly try again.", exception);
+
+        }
     }
 
     @Override
