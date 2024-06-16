@@ -17,7 +17,6 @@ public class GoalContributionController {
 
     @GetMapping("")
     public ResponseEntity<ApiResponse> getGoalContributions(@RequestHeader("Authorization") String token) {
-        System.out.println("goal contributors");
         return goalContributionService.getGoalContributions(token);
     }
 
@@ -36,7 +35,7 @@ public class GoalContributionController {
         return goalContributionService.updateGoalContribution(token, id, request);
     }
 
-    @PostMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public ResponseEntity<ApiResponse> deleteGoalContribution(@RequestHeader("Authorization") String token, @PathVariable Long id) {
         return goalContributionService.deleteGoalContribution(token, id);
     }
