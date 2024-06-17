@@ -33,18 +33,18 @@ public class SecurityConfig {
     private final CustomLogoutHandler customLogoutHandler;
 
     @Bean
-    public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         req -> req.requestMatchers(
-                                "/auth/**",
-                                "/api-docs/**",
-                                "/swagger-ui/**",
-                                "/documentation/**",
-                                "/swagger-config/**"
-                        )
+                                        "/auth/**",
+                                        "/api-docs/**",
+                                        "/swagger-ui/**",
+                                        "/documentation/**",
+                                        "/swagger-config/**"
+                                )
                                 .permitAll()
                                 .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
                                 .anyRequest()
@@ -65,14 +65,14 @@ public class SecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder () {
+    public PasswordEncoder passwordEncoder() {
 
         return new BCryptPasswordEncoder();
 
     }
 
     @Bean
-    public AuthenticationManager authenticationManager (AuthenticationConfiguration configuration) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
 
         return configuration.getAuthenticationManager();
 

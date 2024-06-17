@@ -7,35 +7,29 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Setter
 @Getter
+@Setter
 @Entity
-
-public class GoalContribution {
-
+public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "goal_id")
-    @JsonIgnore
-    private Goal goal;
-
-    private double amount;
-
-    private LocalDate date;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
 
-    @Column(columnDefinition = "TEXT", nullable = true)
+    @ManyToOne
+    @JoinColumn(name = "expense_category_id")
+    private ExpenseCategory expenseCategory;
+
+    private String name;
+
+    private double amount;
+
     private String description;
 
     @CreationTimestamp
@@ -48,7 +42,4 @@ public class GoalContribution {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public GoalContribution() {
-
-    }
 }

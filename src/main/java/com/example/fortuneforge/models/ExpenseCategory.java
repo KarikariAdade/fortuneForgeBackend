@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @Entity
-
+@Table(name = "expense_category")
 public class ExpenseCategory {
 
     @Id
@@ -25,7 +25,7 @@ public class ExpenseCategory {
     @Column(columnDefinition = "TEXT", nullable = true)
     private String description;
 
-    private double limit;
+    private double amountLimit;
 
     @ManyToOne()
     @JoinColumn(name = "user_id")

@@ -4,8 +4,8 @@ import com.example.fortuneforge.config.ApiResponse;
 import com.example.fortuneforge.config.CatchErrorResponses;
 import com.example.fortuneforge.models.IncomeCategory;
 import com.example.fortuneforge.models.User;
-import com.example.fortuneforge.repositories.income.IncomeCategoryRepository;
 import com.example.fortuneforge.repositories.UserRepository;
+import com.example.fortuneforge.repositories.income.IncomeCategoryRepository;
 import com.example.fortuneforge.requests.income.IncomeCategoryRequest;
 import com.example.fortuneforge.services.AuthenticationService;
 import jakarta.validation.Valid;
@@ -33,7 +33,7 @@ public class IncomeCategoryService {
 
     public ResponseEntity<ApiResponse> getIncomeCategories(String token) {
 
-       User user = authenticationService.retrieveUserFromToken(token);
+        User user = authenticationService.retrieveUserFromToken(token);
 
         try {
 
@@ -127,7 +127,7 @@ public class IncomeCategoryService {
 
             return new ResponseEntity<>(new ApiResponse("Income category not found", null, null), HttpStatus.OK);
 
-        }catch (Exception exception) {
+        } catch (Exception exception) {
 
             return CatchErrorResponses.catchErrors("Income category not found", exception);
         }

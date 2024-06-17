@@ -18,7 +18,7 @@ public class IncomeCategoryController {
     private final IncomeCategoryService incomeCategoryService;
 
     @PostMapping("")
-    public ResponseEntity<ApiResponse> getAllCategories (@RequestHeader("Authorization") String token, @RequestBody IncomeCategoryRequest request) {
+    public ResponseEntity<ApiResponse> getAllCategories(@RequestHeader("Authorization") String token, @RequestBody IncomeCategoryRequest request) {
 
         return incomeCategoryService.getIncomeCategories(token);
 
@@ -26,14 +26,14 @@ public class IncomeCategoryController {
 
 
     @PostMapping("store")
-    public ResponseEntity<ApiResponse> addIncomeCategory (@RequestHeader("Authorization") String token, @RequestBody @Valid IncomeCategoryRequest request) {
+    public ResponseEntity<ApiResponse> addIncomeCategory(@RequestHeader("Authorization") String token, @RequestBody @Valid IncomeCategoryRequest request) {
 
         return incomeCategoryService.addIncomeCategory(token, request);
 
     }
 
     @PostMapping("update/{categoryId}")
-    public ResponseEntity<ApiResponse> updateIncomeCategory (@PathVariable Long categoryId, @RequestBody @Valid IncomeCategoryRequest request) {
+    public ResponseEntity<ApiResponse> updateIncomeCategory(@PathVariable Long categoryId, @RequestBody @Valid IncomeCategoryRequest request) {
 
         return incomeCategoryService.updateIncomeCategory(categoryId, request);
 

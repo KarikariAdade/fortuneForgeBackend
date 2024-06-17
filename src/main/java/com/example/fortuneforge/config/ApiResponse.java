@@ -16,5 +16,4 @@ public class ApiResponse {
     private String token;
 
 
-
 }

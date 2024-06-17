@@ -2,11 +2,9 @@ package com.example.fortuneforge.controllers;
 
 import com.example.fortuneforge.config.ApiResponse;
 import com.example.fortuneforge.models.User;
-import com.example.fortuneforge.repositories.UserRepository;
 import com.example.fortuneforge.requests.authentication.LoginRequest;
 import com.example.fortuneforge.requests.authentication.PasswordResetRequest;
 import com.example.fortuneforge.requests.authentication.RegistrationRequest;
-import com.example.fortuneforge.services.AuthEmailService;
 import com.example.fortuneforge.services.AuthenticationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -18,8 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -40,7 +36,7 @@ public class AuthenticationController {
 
             return authenticationService.registerUser(request);
 
-        }catch (Exception exception) {
+        } catch (Exception exception) {
 
             String errorMessage = "Failed to login user: " + exception.getMessage();
 

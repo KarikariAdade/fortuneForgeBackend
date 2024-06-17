@@ -7,13 +7,9 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.cfg.Environment;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
@@ -54,7 +50,7 @@ public class JwtService {
     }
 
 
-    public <T> T extractClaim (String token, Function<Claims, T> resolver) {
+    public <T> T extractClaim(String token, Function<Claims, T> resolver) {
         Claims claims = extractAllClaim(token);
 
         return resolver.apply(claims);
@@ -69,7 +65,7 @@ public class JwtService {
     }
 
     // Checks if token is valid
-    public boolean isValid (String token, UserDetails user) {
+    public boolean isValid(String token, UserDetails user) {
 
         String username = extractUsername(token);
 

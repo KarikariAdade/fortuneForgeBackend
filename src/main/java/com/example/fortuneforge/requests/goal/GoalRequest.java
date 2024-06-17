@@ -1,6 +1,5 @@
 package com.example.fortuneforge.requests.goal;
 
-import com.example.fortuneforge.models.GoalCategory;
 import com.example.fortuneforge.models.GoalPriority;
 import com.example.fortuneforge.models.GoalStatus;
 import jakarta.persistence.EnumType;
@@ -11,7 +10,6 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Range;
 
 @Getter
 @Setter

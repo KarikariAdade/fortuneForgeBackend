@@ -49,7 +49,7 @@ public class GoalContributionServiceImpl implements GoalContributionService {
 
             return new ResponseEntity<>(new ApiResponse("User not found", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
 
-        }catch (Exception exception) {
+        } catch (Exception exception) {
 
             return CatchErrorResponses.catchErrors("Goal Contributions not found", exception);
 
@@ -171,7 +171,7 @@ public class GoalContributionServiceImpl implements GoalContributionService {
 
             return new ResponseEntity<>(new ApiResponse("User not found", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
 
-        }catch (Exception exception) {
+        } catch (Exception exception) {
 
             return CatchErrorResponses.catchErrors("Goal Contribution not retrieved. Kindly try again.", exception);
 
@@ -196,7 +196,7 @@ public class GoalContributionServiceImpl implements GoalContributionService {
 
             return new ResponseEntity<>(new ApiResponse("User not found", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
 
-        }catch (Exception exception) {
+        } catch (Exception exception) {
 
             return CatchErrorResponses.catchErrors("Goal Contribution not retrieved. Kindly try again.", exception);
 

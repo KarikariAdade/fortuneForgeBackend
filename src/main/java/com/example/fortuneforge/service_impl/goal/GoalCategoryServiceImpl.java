@@ -39,7 +39,7 @@ public class GoalCategoryServiceImpl implements GoalCategoryService {
 
             return ResponseEntity.ok(new ApiResponse("User not found", null, null));
 
-        }catch (Exception exception) {
+        } catch (Exception exception) {
 
             return CatchErrorResponses.catchErrors("Goal Categories not found", exception);
 
@@ -72,7 +72,7 @@ public class GoalCategoryServiceImpl implements GoalCategoryService {
 
             return ResponseEntity.ok(new ApiResponse("User not found", null, null));
 
-        }catch (Exception exception) {
+        } catch (Exception exception) {
 
             return CatchErrorResponses.catchErrors("Goal category could not be created", exception);
 
@@ -106,7 +106,7 @@ public class GoalCategoryServiceImpl implements GoalCategoryService {
 
             return ResponseEntity.ok(new ApiResponse("User not found", null, null));
 
-        }catch (Exception exception) {
+        } catch (Exception exception) {
 
             return CatchErrorResponses.catchErrors("Goal category update unsuccessful", exception);
 
@@ -127,7 +127,7 @@ public class GoalCategoryServiceImpl implements GoalCategoryService {
 
                     return new ResponseEntity<>(new ApiResponse("Category has goals and cannot be deleted.", category.getGoals(), null), HttpStatus.INTERNAL_SERVER_ERROR);
 
-                }else {
+                } else {
 
                     goalCategoryRepository.deleteById(category.getId());
 
@@ -139,7 +139,7 @@ public class GoalCategoryServiceImpl implements GoalCategoryService {
 
             return ResponseEntity.ok(new ApiResponse("User not found", null, null));
 
-        }catch (Exception exception) {
+        } catch (Exception exception) {
 
             return CatchErrorResponses.catchErrors("Goal category deletion failed", exception);
 

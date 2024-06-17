@@ -1,6 +1,5 @@
 package com.example.fortuneforge.requests.authentication;
 
-import com.example.fortuneforge.models.Role;
 import com.example.fortuneforge.requests.customValidator.UniqueEmailConstraint;
 import jakarta.validation.constraints.*;
 import lombok.Builder;

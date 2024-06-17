@@ -32,7 +32,7 @@ public class CustomLogoutHandler implements LogoutHandler {
             System.out.println("Token stored: " + storedToken);
             storedToken.setLoggedOut(true);
             tokenRepository.save(storedToken);
-        }else {
+        } else {
             System.out.println("token not found: " + token);
         }
     }

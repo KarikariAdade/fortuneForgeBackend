@@ -15,11 +15,15 @@ import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.util.ObjectUtils.isEmpty;
 
@@ -37,7 +41,7 @@ public class IncomeService {
 
     private final IncomeCategoryRepository incomeCategoryRepository;
 
-    public ResponseEntity<ApiResponse> getAllIncome (@RequestHeader("Authorization") String token) {
+    public ResponseEntity<ApiResponse> getAllIncome(@RequestHeader("Authorization") String token) {
 
         User user = authenticationService.retrieveUserFromToken(token);
 
@@ -51,7 +55,7 @@ public class IncomeService {
 
     }
 
-    public ResponseEntity<ApiResponse> addIncome (String token, @RequestBody IncomeRequest request) {
+    public ResponseEntity<ApiResponse> addIncome(String token, @RequestBody IncomeRequest request) {
 
         try {
             User user = authenticationService.retrieveUserFromToken(token);
@@ -85,7 +89,7 @@ public class IncomeService {
 
     }
 
-    public ResponseEntity<ApiResponse> updateIncome (String token, @PathVariable String incomeId, @RequestBody IncomeRequest request) {
+    public ResponseEntity<ApiResponse> updateIncome(String token, @PathVariable String incomeId, @RequestBody IncomeRequest request) {
 
         try {
 
@@ -94,24 +98,24 @@ public class IncomeService {
             User user = authenticationService.retrieveUserFromToken(token);
 
             if (isEmpty(income)) {
-                return new ResponseEntity<>(new ApiResponse("Income not found.", request, null ), HttpStatus.OK);
+                return new ResponseEntity<>(new ApiResponse("Income not found.", request, null), HttpStatus.OK);
             }
 
             if (user == null) {
 
-                return new ResponseEntity<>(new ApiResponse("User not found.", request, null ), HttpStatus.OK);
+                return new ResponseEntity<>(new ApiResponse("User not found.", request, null), HttpStatus.OK);
 
             }
 
             Optional<IncomeCategory> incomeCategory = incomeCategoryRepository.findById(Long.valueOf(request.getIncomeCategory()));
 
             if (incomeCategory.isEmpty()) {
-                return new ResponseEntity<>(new ApiResponse("Income Category not found.", request, null ), HttpStatus.OK);
+                return new ResponseEntity<>(new ApiResponse("Income Category not found.", request, null), HttpStatus.OK);
             }
 
             incomeRepository.save(generateIncomeUpdateData(request, income, user, incomeCategory));
 
-            return new ResponseEntity<>(new ApiResponse("Income updated successfully.", income, null ), HttpStatus.OK);
+            return new ResponseEntity<>(new ApiResponse("Income updated successfully.", income, null), HttpStatus.OK);
 
 
         } catch (Exception exception) {
@@ -122,12 +126,12 @@ public class IncomeService {
 
     }
 
-    public ResponseEntity<ApiResponse> deleteIncome (String incomeId){
+    public ResponseEntity<ApiResponse> deleteIncome(String incomeId) {
 
         try {
             Income income = incomeRepository.findById(Long.valueOf(incomeId)).get();
 
-            if(!isEmpty(income)){
+            if (!isEmpty(income)) {
 
                 incomeRepository.delete(income);
 

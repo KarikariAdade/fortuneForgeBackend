@@ -9,7 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("income")
@@ -18,6 +19,7 @@ import java.util.*;
 public class IncomeController {
 
     private final IncomeService incomeService;
+
     @GetMapping("/")
     public ResponseEntity<ApiResponse> getAllIncome(@RequestHeader("Authorization") String token) {
 
@@ -34,7 +36,7 @@ public class IncomeController {
     }
 
     @PostMapping("/update/{id}")
-    public ResponseEntity<ApiResponse> updateIncome(@RequestHeader("Authorization") String token, @PathVariable String id,  @RequestBody @Valid IncomeRequest request) {
+    public ResponseEntity<ApiResponse> updateIncome(@RequestHeader("Authorization") String token, @PathVariable String id, @RequestBody @Valid IncomeRequest request) {
 
         return this.incomeService.updateIncome(token, id, request);
 

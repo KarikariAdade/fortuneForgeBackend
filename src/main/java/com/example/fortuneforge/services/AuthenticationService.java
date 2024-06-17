@@ -1,5 +1,6 @@
 package com.example.fortuneforge.services;
 
+import com.example.fortuneforge.config.ApiResponse;
 import com.example.fortuneforge.config.CatchErrorResponses;
 import com.example.fortuneforge.models.PasswordResets;
 import com.example.fortuneforge.models.Role;
@@ -11,25 +12,21 @@ import com.example.fortuneforge.repositories.UserRepository;
 import com.example.fortuneforge.requests.authentication.LoginRequest;
 import com.example.fortuneforge.requests.authentication.PasswordResetRequest;
 import com.example.fortuneforge.requests.authentication.RegistrationRequest;
-import com.example.fortuneforge.config.ApiResponse;
 import com.example.fortuneforge.service_impl.UserDetailServiceImpl;
-import jakarta.servlet.http.HttpServletRequest;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.context.Context;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -89,7 +86,7 @@ public class AuthenticationService {
     }
 
     @Transactional
-    public ResponseEntity<ApiResponse> forgotPassword (User user) {
+    public ResponseEntity<ApiResponse> forgotPassword(User user) {
 
         try {
             if (user.getEmail() != null && !user.getEmail().isEmpty()) {
@@ -149,7 +146,7 @@ public class AuthenticationService {
 
                 return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Password Reset Successful", null, null));
 
-            }else {
+            } else {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse("Password reset token expired. Kindly generate a new one.", null, null));
             }
 
@@ -240,5 +237,14 @@ public class AuthenticationService {
 
         return null;
 
+    }
+
+    public User validateUserFromToken(String token) throws Exception {
+        User user = retrieveUserFromToken(token);
+
+        if (user == null) {
+            throw new Exception("User not found");
+        }
+        return user;
     }
 }

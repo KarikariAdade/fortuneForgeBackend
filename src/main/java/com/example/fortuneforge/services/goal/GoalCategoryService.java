@@ -8,7 +8,7 @@ public interface GoalCategoryService {
 
     ResponseEntity<ApiResponse> getGoalCategories(String token);
 
-    ResponseEntity<ApiResponse> createGoalCategory (String token, GoalCategoryRequest request);
+    ResponseEntity<ApiResponse> createGoalCategory(String token, GoalCategoryRequest request);
 
     ResponseEntity<ApiResponse> updateGoalCategory(String token, Long id, GoalCategoryRequest request);
 

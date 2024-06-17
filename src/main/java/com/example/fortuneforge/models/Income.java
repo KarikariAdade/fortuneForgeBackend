@@ -39,7 +39,7 @@ public class Income {
 
     private LocalDate endDate;
 
-    @Column(columnDefinition ="default 'false'")
+    @Column(columnDefinition = "default 'false'")
     private boolean isRecurring;
 
     @CreationTimestamp

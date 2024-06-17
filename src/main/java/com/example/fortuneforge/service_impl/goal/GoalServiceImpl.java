@@ -105,7 +105,7 @@ public class GoalServiceImpl implements GoalService {
 
                     Goal goal = goalRepository.findById(id).orElse(null);
 
-                    if (goal!= null) {
+                    if (goal != null) {
 
                         updateGoal(goalRequest, goal, goalCategory, user);
 
@@ -128,7 +128,6 @@ public class GoalServiceImpl implements GoalService {
         }
 
     }
-
 
 
     @Override

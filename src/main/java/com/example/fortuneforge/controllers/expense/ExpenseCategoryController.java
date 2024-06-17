@@ -3,6 +3,8 @@ package com.example.fortuneforge.controllers.expense;
 import com.example.fortuneforge.config.ApiResponse;
 import com.example.fortuneforge.requests.expense.ExpenseCategoryRequest;
 import com.example.fortuneforge.service_impl.expense.ExpenseCategoryServiceImpl;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +13,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("expense/category")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "Authorization")
+@Tag(name = "Expense Categories", description = "Expense Management")
 public class ExpenseCategoryController {
 
-    private ExpenseCategoryServiceImpl expenseCategoryService;
+    private final ExpenseCategoryServiceImpl expenseCategoryService;
 
     @GetMapping("")
     public ResponseEntity<ApiResponse> getExpenseCategory(@RequestHeader("Authorization") String token) {
