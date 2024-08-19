@@ -112,11 +112,44 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public ResponseEntity<ApiResponse> deleteExpense(String token, Long id) {
-        return null;
+        try {
+
+            User user = authenticationService.validateUserFromToken(token);
+
+            Optional<Expense> expense = expenseRepository.findByUserIdAndExpenseId(user.getId(), id);
+
+            if (expense.isPresent()) {
+                expenseRepository.deleteById(id);
+
+                return ResponseEntity.ok(new ApiResponse("Expense deleted successfully", null, null));
+            }
+
+            return new ResponseEntity<>(new ApiResponse("Expense not found", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
+
+        } catch (Exception exception) {
+
+            return CatchErrorResponses.catchErrors("Expense could not be deleted", exception);
+        }
     }
 
     @Override
     public ResponseEntity<ApiResponse> getExpenseDetails(String token, Long id) {
-        return null;
+        try {
+
+            User user = authenticationService.validateUserFromToken(token);
+
+            Optional<Expense> expense = expenseRepository.findByUserIdAndExpenseId(user.getId(), id);
+
+            if (expense.isPresent()) {
+
+                return ResponseEntity.ok(new ApiResponse("Expense retrieved successfully", expense, null));
+            }
+
+            return new ResponseEntity<>(new ApiResponse("Expense not found", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
+
+        } catch (Exception exception) {
+
+            return CatchErrorResponses.catchErrors("Expense could not be retrieved", exception);
+        }
     }
 }
