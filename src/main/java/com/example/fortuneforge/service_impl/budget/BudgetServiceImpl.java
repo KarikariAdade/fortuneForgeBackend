@@ -54,6 +54,7 @@ public class BudgetServiceImpl implements BudgetService {
         } catch (Exception exception) {
 
             return CatchErrorResponses.catchErrors("Expense could not be retrieved", exception);
+
         }
 
     }
@@ -79,7 +80,6 @@ public class BudgetServiceImpl implements BudgetService {
 
             List<BudgetAllocation> budgetAllocationList = saveBudgetAllocation(budgetAllocationFilter, budget);
 
-//
             if (budgetAllocationList.isEmpty())
                 throw new CustomInternalServerErrorException("At least one expense category is required");
 
@@ -139,9 +139,7 @@ public class BudgetServiceImpl implements BudgetService {
 
                     checkExistingAllocation.forEach(existingAllocation -> {
 
-                        if (existingAllocation.getExpenseCategory().getId() == budgetAllocation.getCategoryId()) {
-                            // The allocation matches the category, so no action is needed.
-                        } else {
+                        if (existingAllocation.getExpenseCategory().getId() != budgetAllocation.getCategoryId()) {
                             budgetAllocationRepository.delete(existingAllocation);
 
                             // The else block here is unnecessary because we only create a new allocation if the IDs don't match
